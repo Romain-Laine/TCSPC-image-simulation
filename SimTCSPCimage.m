@@ -20,7 +20,7 @@ Folder_for_Save = 'C:\Users\rfl30\DATA raw\TCSPC data\TCSPC simulated dataset fo
 str = cell(1,4);
 str{1} = 'Photon # scan';
 str{2} = 'Tau scan';
-str{3} = 'Uniform scan';
+str{3} = 'Uniform';
 str{4} = 'Freestyle';
 
 [Selection,ok] = listdlg('PromptString','Select a file:','SelectionMode','single','ListString',str);

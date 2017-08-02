@@ -5,4 +5,4 @@ The method uses a Monte-Carlo simulation of photon arrival times based on probab
 The OME.tiff save was kindly provided by Ian Munro <i.munro@imperial.ac.uk> from the Photonics Group at Imperial College, London and Sebastien Besson <s.besson@dundee.ac.uk> from Dundee, who write the BioFormat MATLAB Utilities.
 
 You need to download the Bio-formats Matlab plugin from 
-http://downloads.openmicroscopy.org/bio-formats/5.5.0/
+http://downloads.openmicroscopy.org/bio-formats/

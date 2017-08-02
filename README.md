@@ -6,3 +6,4 @@ The OME.tiff save was kindly provided by Ian Munro <i.munro@imperial.ac.uk> from
 
 You need to download the Bio-formats Matlab plugin from 
 http://downloads.openmicroscopy.org/bio-formats/
+and set the path to it as shown in the file.

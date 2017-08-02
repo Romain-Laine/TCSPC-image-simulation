@@ -1,5 +1,5 @@
 # TCSPC-image-simulation
-This code provides an easy way to simulate TCSPC image data which includes effect of the IRF, background after-pulsing and laser repetition rate. Images are saved as OME.tiff using Bioformat.
+This MATLAB code provides an easy way to simulate TCSPC image data which includes effect of the IRF, background after-pulsing and laser repetition rate. Images are saved as OME.tiff using Bioformat.
 
 The method uses a Monte-Carlo simulation of photon arrival times based on probability density functions of emission (exponential) and excitation (Gaussian). 
 

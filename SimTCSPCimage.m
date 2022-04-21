@@ -1,9 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TCSPC data simulator
-% This code generates TCSPC data with Gaussian IRF and multiexcitation peaks, background (afterpulsing)
-% The data is saved as a TIFF stack via various methods.
-% Laser Analytics Group: http://laser.ceb.cam.ac.uk/
-%
+% This code generates TCSPC data with Gaussian IRF and multiexcitation
+% peaks, background (afterpulsing). Choose between photon scan, tau scan, uniform, or freestyle simulation options. 
+% The data is saved as a TIFF stack via various methods. 
+% 
+% Laser Analytics Group: http://laser.ceb.cam.ac.uk/ 
 % Dr Romain Laine rfl30@cam.ac.uk
 % 2017-05-11
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -12,9 +13,51 @@ close all
 clear all
 clc
 
+% Set the size of image you want to simulate. This also relates to the number of repeats for each condition -------
+n_repeats = 1024;     % number of pixels in the vertical direction
+n_conditions = 1024;  % number of pixels in the horizontal direction
+
+% Change acquisition parameters --------------------
+R = 80;      % Repetition rate of the laser in MHz units
+T = 12.5;    % Acquisition window 0-T in ns units
+n = 8;       % number of bits coding the TAC n = 8 --> 256 bins
+Ap = 5;      % Afterpulsing in % --> background in TCSPC
+
+% Change parameters for IRF-----------------------------
+t0 = 1.5;    % offset in ns units
+s = 0.15;    % standard deviation of Gaussian function in ns units
+N_irf = 1e8; % MAXIMUM 10^8! (150,000 for 256 bins to get close to 16 bit histograms)
+
+% 4 different types of simulations can be generated below
+
+% 1. For Photon number scan ----------------------
+% Here the photon counts are linearly spaced between N_min and N_max across
+% a number of n_conditions
+N_min = 100;    % minimum number of photons
+N_max = 5000;   % maximum number of photons
+Tau = 5;        % in ns units
+
+% 2. For Tau scan -------------------------------
+% Here the lifetimes are linearly spaced between Tau_min and Tau_max.
+% All pixels have the same number of photons N. 
+Tau_min = 0.05;  % minimum lifetime
+Tau_max = 6;     % minimum lifetime
+N = 5000;        % number of photons
+
+% 3. For Uniform --------------------------------
+% Here a uniform lifetime and number of photons is generated using the
+% variables Tau and N set above
+
+% 4. For Freestyle -----------------------------
+% Here the list of lifetimes and photon counts are defined below in the
+% code
+FolderNameFreestyle = '_2 lines no BG';
+
+
+%Save files to folder
 Save_ON = 1;
 FileName_append = '';
-Folder_for_Save = 'C:\Users\rfl30\DATA raw\TCSPC data\TCSPC simulated dataset for CaliFLIM\TESTS\';
+Folder_for_Save = 'D:\F3-CMM\TCSPC-image-simulation-master\TCSPC-image-simulation-master\';
 
 % Simulation type -----------------------------
 str = cell(1,4);
@@ -29,47 +72,6 @@ Sim_type = str{Selection};
 if ~ok 
     return
 end
-
-
-% Number of repeats for each conditions -------
-n_repeats = 64;     % number of pixels in the vertical direction
-n_conditions = 64;  % number of pixels in the horizontal direction
-
-% For Photon number scan ----------------------
-% Here the photon counts are linearly spaced bewteen N_min and N_max across
-% a number of n_conditions
-N_min = 100;
-N_max = 5000;
-Tau = 2.5;   % ns
-
-% For Tau scan -------------------------------
-% Here the lifetimes are linearly spaced bewteen Tau_min and Tau_max across
-% a number of n_conditions
-Tau_min = 0.05;
-Tau_max = 6;
-N = 5000;    % number of photons
-
-
-% For Uniform --------------------------------
-% Here a uniform lifetime and number of photons is generated using the
-% variables Tau and N set above
-
-% For Freestyle -----------------------------
-% Here the list of lifetimes and photon counts are defined below in the
-% code
-FolderNameFreestyle = '_2 lines no BG';
-
-
-% IRF parameters -----------------------------
-t0 = 3.2;    % offset in ns
-s = 0.15;    % standard deviation of Gaussian function in ns
-N_irf = 1e8; % MAXIMUM 10^8! (150,000 for 256 bins to get close to 16 bits histograms)
-
-% Acquisition parameters --------------------
-n = 8;       % number of bits coding the TAC n = 8 --> 256 bins
-T = 25;      % Acquisition window 0-T in ns
-R = 1;       % Repetition rate of the laser in MHz
-Ap = 2;      % Afterpulsing in % --> background in TCSPC
 
 
 %% -------------------------------------------------------------------------------------------------------
